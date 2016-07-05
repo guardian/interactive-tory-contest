@@ -53,7 +53,7 @@ window.init = function init(el, config) {
 				currentData = data[i];
 
 				d3.select('#day' + String(currentDay))
-				.attr('class', 'day active')
+				.attr('class', 'day active current')
 
 
 				for (var j = 1; j <= candidates.length; j++)
@@ -91,13 +91,10 @@ window.init = function init(el, config) {
 						.attr('src', config.assetPath + "/assets/imgs/" + array[k-1].candidate + ".jpg")
 
 						d3.select('#person' + k + ' .person-bundle')
-						.style("margin-left", position - pMargin + 'px')
+						//.style("margin-left", position - pMargin + 'px')
 						.append('div')
 						.attr('class', 'person-name')
-						.html(toTitleCase(name))
-						.append('div')
-						.attr('class', 'percentage')
-						.html(array[k-1].percentage + '%')
+						.html(toTitleCase(name) + '<br><span class="percentage">' + array[k-1].percentage + '%</span>')
 				}
 
 
@@ -196,17 +193,58 @@ window.init = function init(el, config) {
 				for (var k = 1; k <= array.length; k++)
 				{
 					var position = (width * array[k-1].percentage) / 100;
+					//var position = array[k-1].percentage;
 					var pMargin = (position * margin) / width +20;
 
-					d3.select('#day' + currentDay +  ' #person' + k + ' .person-bundle')
-					.style("margin-left", (position - pMargin)+20 + 'px')
+					d3.select('#day' + currentDay +  ' #person' + k + ' img')
+					//.style("margin-left", (position - pMargin)+20 + 'px')
+					//.style("margin-left", position + 'px')
+					.style("margin-left", array[k-1].percentage + '%')
+
+					d3.select('#day' + currentDay +  ' #person' + k + ' .person-img')
+					//.style("width", (position + 52) + 'px')
+					.style("width", "calc(" + array[k-1].percentage + '% + 52px)')
+					/*.style('width', array[k-1].percentage + '%')*/
+
 				}
+
+				d3.selectAll(".current .person-name")
+				//.each((d, i) => {console.log(array[i]);})
+				.style("position", "absolute")
+				.style("left", (d, i) => "calc(" + array[i].percentage + '% + 57px)')
+				.style("top", 10 + "px")
+				.style("text-align", "left")
+				.style("width", 120 + "px");
+
+				d3.selectAll(".current img")
+				.style("width", "52px");
+
+				d3.selectAll(".current .person")
+				.style("width", "100%");
 				
 			}
 			else
 			{
+				let len = array.length;	
+				let widthRes = (width / (len+1)) + "px";
+
 				d3.selectAll('#day' + currentDay +  ' .person-bundle')
 				.style("margin-left", '0px')
+
+				d3.selectAll(".current .person-name")
+				.style("position", "initial")
+				.style("text-align", "center")
+				.style("width", widthRes);
+				
+
+				d3.selectAll(".current .person")
+				.style("width", widthRes);
+				d3.selectAll(".current .person-img")
+				.style("width", widthRes);
+				d3.selectAll(".current img")
+				.each((d, i) => {console.log(array[i]);})
+				.style("width", widthRes)
+				.style("margin-left", 0);
 			}
 			
 		}
