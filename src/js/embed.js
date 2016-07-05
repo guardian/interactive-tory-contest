@@ -102,6 +102,9 @@ window.init = function init(el, config) {
 				{
 					var last = d3.select('#person' + array.length + ' .person-bundle .person-img')
 					.attr('class', 'person-img inactive')
+
+					var last2 = d3.select('#person' + parseInt(array.length)-1 + ' .person-bundle .person-img')
+					.attr('class', 'person-img inactive')
 				}
 				
 				//makePositions()
