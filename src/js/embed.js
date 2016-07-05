@@ -28,6 +28,7 @@ window.init = function init(el, config) {
 
     function createApp(error, table)
 	{
+		console.log(table)
 		var candidates = ['Theresa May','Michael Gove','Stephen Crabb','Liam Fox','Andrea Leadsom'];
 		var data = table.sheets.Sheet1;
 		var l = data.length;
