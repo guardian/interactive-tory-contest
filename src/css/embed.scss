@@ -1,0 +1,208 @@
+@import "fonts";
+
+html,
+body {
+    @include fs-bodyCopy(2);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.interactive-embed {
+}
+
+    @font-face {
+  font-family: "Guardian Sans Web";
+  src: url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianSansWeb/GuardianSansWeb-Light.eot");
+  src: url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianSansWeb/GuardianSansWeb-Light.eot?#iefix") format("embedded-opentype"), url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianSansWeb/GuardianSansWeb-Light.woff2") format("woff2"), url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianSansWeb/GuardianSansWeb-Light.woff") format("woff"), url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianSansWeb/GuardianSansWeb-Light.ttf") format("truetype"), url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianSansWeb/GuardianSansWeb-Light.svg#GuardianSansWeb-Light") format("svg");
+  font-weight: 200;
+  font-style: normal;
+  font-stretch: normal; }
+
+@font-face {
+  font-family: "Guardian Egyptian Web";
+  src: url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.eot");
+  src: url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.eot?#iefix") format("embedded-opentype"), url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff2") format("woff2"), url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff") format("woff"), url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf") format("truetype"), url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.svg#GuardianEgyptianWeb-Semibold") format("svg");
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal; }
+
+    body{padding: 0; margin: 0;}
+     h2 {
+        line-height: 1.2;
+        font-family: "Guardian Egyptian Web",Georgia,serif;
+          font-size: 22px;
+          font-weight: bold;
+          margin: 0;
+          padding-top: 0;
+      }
+    .container{position: relative; margin-bottom: 1.5em;}
+
+
+    .day{display: inline-block; width: 100%;
+
+      line-height: 1.2;
+      font-family: "Guardian Egyptian Web",Georgia,serif;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 2.5em;
+      padding-top: 0;
+
+    }
+
+    .date{
+    	display: inline-block; width: 100%; padding: 5px;
+    	margin-bottom: 1em;
+
+    }
+
+    .person {
+    width: 33%;
+    padding: 5px;
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: top; }
+      @media (min-width: 400px) {
+        .person {width: calc(100%/4 ); } 
+      }
+      @media (min-width: 399px) {
+        .person {width: 100%; margin-left: 0px;}
+
+      }
+
+      .person:last-child{border-bottom:0px;}
+
+
+     .person-past{
+     	width:calc(100%/6);
+     	display: inline-block;
+     	margin-right: 7px;
+     	vertical-align: text-top;
+
+
+     }
+
+     .person-past .person-bundle{width:auto;}
+ 
+     .person-past .person-img{width: 50px;}
+
+     .person-past img{width: 50px; }
+
+    .day.inactive{display: none;}
+
+
+    .person-img
+    {
+      position: relative;
+      line-height: 0;
+      margin: auto;
+    }
+
+  .person-img.inactive::before{
+    content:"";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 200px;
+    background: rgba(255, 255, 255, 0.8); }
+
+  .person-img.active::before {
+    content:"";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 200px;
+    background: rgba(0, 86, 137, 0.4); }
+
+  .person-img.inactive::before {
+    background: rgba(181, 24, 0, 0.4); }
+
+  .person-img img {
+    width: 100%;
+    display: block;
+    border-radius: 200px;}
+
+    @media (min-width: 400px) {
+        .person-img {width: 72px;}
+      }
+      @media (min-width: 399px) {
+        .person-img {width: 72px; }
+      }
+  
+
+  .person-name {
+  font-family: 'Guardian Text Sans Web', Arial;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 5px;
+  color: #767676; }
+  @media (min-width: 400px) {
+    .person-name {
+      font-size: 14px;
+      width: 100%;} }
+
+  .percentage{
+  font-family: 'Guardian Egyptian Web', Arial;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #404040;
+  line-height: 14px;
+}
+  
+
+
+
+  .person-bundle
+  {
+  }
+  	@media (min-width: 400px) {
+  	.person-bundle{width:100%}
+  }@media (min-width: 399px) {
+  	.person-bundle{width:105px}
+  }
+
+  .contest-key {
+    left: 3px;
+    width: 100%;
+}
+
+.contest-status {
+    display: inline-block;
+    line-height: 15px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.contest-dot {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 100px;
+    background: rgba(0, 86, 137, 0.4);
+}
+
+.contest-dot.candidate {
+    background: rgba(0, 86, 137, 0.4);
+}
+
+.contest-dot.eliminated {
+    background: rgba(181, 24, 0, 0.4);
+}
+.contest-label {
+    margin-left: 20px;
+    font-family: 'Guardian Text Sans Web', Arial;
+    font-size: 14px;
+    line-height: 15px;
+    vertical-align: top;
+    color: #767676;
+    display: inline-block;
+}
+
+
+
