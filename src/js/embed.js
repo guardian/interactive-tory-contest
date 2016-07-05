@@ -100,8 +100,11 @@ window.init = function init(el, config) {
 				}
 
 
-				var last = d3.select('#person' + array.length + ' .person-bundle .person-img')
-				.attr('class', 'person-img inactive')
+				if(array[array.length-1].percentage > 0)
+				{
+					var last = d3.select('#person' + array.length + ' .person-bundle .person-img')
+					.attr('class', 'person-img inactive')
+				}
 				
 				//makePositions()
 			}
@@ -131,7 +134,6 @@ window.init = function init(el, config) {
 				   return d3.descending(x.percentage, y.percentage);
 				})
 
-				console.log(pastarray)
 
 				for (var k = 1; k <= pastarray.length; k++)
 				{
@@ -157,8 +159,13 @@ window.init = function init(el, config) {
 						.html(toTitleCase(name))
 				}
 
-				var last = d3.select('#person-past' + pastarray.length + ' .person-bundle .person-img')
-				.attr('class', 'person-img inactive')
+
+				if(pastarray[pastarray.length-1].percentage > 0)
+				{
+					var last = d3.select('#person-past' + pastarray.length + ' .person-bundle .person-img')
+					.attr('class', 'person-img inactive');
+				}
+				
 				
 			}
 			else
