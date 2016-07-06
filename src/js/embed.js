@@ -17,7 +17,7 @@ window.init = function init(el, config) {
 		//http://www.mirror.co.uk/news/uk-news/next-conservative-leader-elected-how-8327597
 
 		d3.json('https://interactive.guim.co.uk/docsdata-test/1HV0KtuxIFqQkHdxOb8Nh6AnB-24-6stJXZ65q-9X-Ls.json', function(error,data){createApp(error,data)})
-		//d3.json(config.assetPath + '/assets/data.json?asd', function(error,data){createApp(error,data)})
+		//d3.json(config.assetPath + '/assets/data.json', function(error,data){createApp(error,data)})
 
 
     /*reqwest({
@@ -42,12 +42,12 @@ window.init = function init(el, config) {
 		var w = d3.select(window).on('resize', resize);
 		var width = window.innerWidth;
 		var margin = 90;
+
 		var scaleVotes = d3.scale.linear()
-			.domain([0,300])
-			.range([0,100])
+		.range([0,100])
 
 		var currentClass = 'active';
-
+		var maxVotes = 0;
 
 		for (var i = l-1; i >= 0; i--)
 		{
@@ -58,6 +58,7 @@ window.init = function init(el, config) {
 				currentDay = i+1;
 				currentData = data[i];
 
+
 				d3.select('#day' + String(currentDay))
 				.attr('class', 'day active current')
 
@@ -67,15 +68,20 @@ window.init = function init(el, config) {
 					if(currentData['candidate' + j + ' status'] == 'active')
 					{
 						var name = currentData['candidate' + j].toLowerCase().split(' ').join('_');
+						var votes = parseInt(currentData['candidate' + j + ' votes']);
 
-						array.push({candidate:name, votes: parseFloat(currentData['candidate' + j + ' votes']), percentage: scaleVotes(parseFloat(currentData['candidate' + j + ' votes']))});
+						if(maxVotes < votes)maxVotes = votes;
+
+						array.push({candidate:name, votes: votes});
 						
 					} 
 				}
 
 				array.sort(function(x, y){
-				   return d3.descending(x.percentage, y.percentage);
+				   return d3.descending(x.votes, y.votes);
 				})
+
+				scaleVotes.domain([0, d3.max(array).votes]);
 
 
 				for (var k = 1; k <= array.length; k++)
@@ -83,9 +89,6 @@ window.init = function init(el, config) {
 					
 						var name = array[k-1].candidate.split("_").join(" ");
 						if(eliminateds.indexOf(name) != -1 )currentClass = 'inactive';
-
-						var position = (width * array[k-1].percentage) / 100;
-						var pMargin = (position * margin) / width;
 
 						d3.select('#day' + String(i +1))
 						.append('div')
@@ -99,14 +102,13 @@ window.init = function init(el, config) {
 						.attr('src', config.assetPath + "/assets/imgs/" + array[k-1].candidate + ".jpg")
 
 						d3.select('#person' + k + ' .person-bundle')
-						//.style("margin-left", position - pMargin + 'px')
 						.append('div')
 						.attr('class', 'person-name')
-						.html(toTitleCase(name) + '<br><span class="percentage">' + array[k-1].votes + '</span>')
+						.html(toTitleCase(name) + '<br><span class="percentage">' + numberWithCommas(array[k-1].votes) + '</span>')
 				}
 
 
-				if(array[array.length-1].percentage > 0)
+				if(array[array.length-1].votes > 0)
 				{
 					var last = d3.select('#person' + array.length + ' .person-bundle .person-img')
 					.attr('class', 'person-img inactive')
@@ -146,9 +148,6 @@ window.init = function init(el, config) {
 					
 						var name = pastarray[k-1].candidate.split("_").join(" ");
 						if(eliminateds.indexOf(name) != -1 )currentClass = 'inactive';
-
-						var position = (width * pastarray[k-1].percentage) / 100;
-						var pMargin = (position * margin) / width;
 
 						d3.select('#day' + String(i + 1) + ' .people')
 						.append('div')
@@ -193,6 +192,11 @@ window.init = function init(el, config) {
 		    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 		}
 
+		function numberWithCommas(x)
+		{
+    		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+
 
 		function resize()
 		{
@@ -204,26 +208,18 @@ window.init = function init(el, config) {
 
 				for (var k = 1; k <= array.length; k++)
 				{
-					var position = (width * array[k-1].percentage) / 100;
-					//var position = array[k-1].percentage;
-					var pMargin = (position * margin) / width +20;
 
 					d3.select('#day' + currentDay +  ' #person' + k + ' img')
-					//.style("margin-left", (position - pMargin)+20 + 'px')
-					//.style("margin-left", position + 'px')
-					.style("margin-left", array[k-1].percentage + '%')
+					.style("margin-left", scaleVotes(array[k-1].votes) + '%')
 
 					d3.select('#day' + currentDay +  ' #person' + k + ' .person-img')
-					//.style("width", (position + 52) + 'px')
-					.style("width", "calc(" + array[k-1].percentage + '% + 52px)')
-					/*.style('width', array[k-1].percentage + '%')*/
+					.style("width", "calc(" + scaleVotes(array[k-1].votes) + '% + 52px)')
 
 				}
 
 				d3.selectAll(".current .person-name")
-				//.each((d, i) => {console.log(array[i]);})
 				.style("position", "absolute")
-				.style("left", (d, i) => "calc(" + array[i].percentage + '% + 57px)')
+				.style("left", (d, i) => "calc(" + scaleVotes(array[i].votes) + '% + 57px)')
 				.style("top", 10 + "px")
 				.style("text-align", "left")
 				.style("width", 120 + "px");
@@ -232,7 +228,7 @@ window.init = function init(el, config) {
 				.style("width", "52px");
 
 				d3.selectAll(".current .person")
-				.style("width", "100%");
+				.style("width", "90%");
 				
 			}
 			else
@@ -254,7 +250,6 @@ window.init = function init(el, config) {
 				d3.selectAll(".current .person-img")
 				.style("width", widthRes);
 				d3.selectAll(".current img")
-				.each((d, i) => {console.log(array[i]);})
 				.style("width", widthRes)
 				.style("margin-left", 0);
 			}

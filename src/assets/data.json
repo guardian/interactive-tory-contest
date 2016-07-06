@@ -22,13 +22,13 @@
          },
          {  
             "days":"7 July",
-            "day status":"inactive",
+            "day status":"active",
             "candidate1":"Theresa May",
             "candidate1 status":"active",
             "candidate1 votes":"64",
             "candidate2":"Michael Gove",
             "candidate2 status":"active",
-            "candidate2 votes":"37",
+            "candidate2 votes":"25",
             "candidate3":"Stephen Crabb",
             "candidate3 status":"inactive",
             "candidate3 votes":"0",
@@ -37,16 +37,16 @@
             "candidate4 votes":"0",
             "candidate5":"Andrea Leadsom",
             "candidate5 status":"active",
-            "candidate5 votes":"13"
+            "candidate5 votes":"26"
          },
          {  
-            "days":"12 July",
+            "days":"9 September",
             "day status":"inactive",
             "candidate1":"Theresa May",
             "candidate1 status":"active",
-            "candidate1 votes":"0",
+            "candidate1 votes":"148000",
             "candidate2":"Michael Gove",
-            "candidate2 status":"active",
+            "candidate2 status":"inactive",
             "candidate2 votes":"0",
             "candidate3":"Stephen Crabb",
             "candidate3 status":"inactive",
@@ -56,7 +56,7 @@
             "candidate4 votes":"0",
             "candidate5":"Andrea Leadsom",
             "candidate5 status":"active",
-            "candidate5 votes":"0"
+            "candidate5 votes":"37000"
          }
       ]
    }
