@@ -11,11 +11,13 @@ window.init = function init(el, config) {
 
     el.innerHTML = embedHTML;
 
+
     	//http://www.theguardian.com/politics/2016/jun/26/labour-shadow-cabinet-resignations-jeremy-corbyn-who-has-gone
 
 		//http://www.mirror.co.uk/news/uk-news/next-conservative-leader-elected-how-8327597
 
 		d3.json('https://interactive.guim.co.uk/docsdata-test/1HV0KtuxIFqQkHdxOb8Nh6AnB-24-6stJXZ65q-9X-Ls.json', function(error,data){createApp(error,data)})
+		//d3.json(config.assetPath + '/assets/data.json?asd', function(error,data){createApp(error,data)})
 
 
     /*reqwest({
@@ -29,6 +31,7 @@ window.init = function init(el, config) {
     function createApp(error, table)
 	{
 		var candidates = ['Theresa May','Michael Gove','Stephen Crabb','Liam Fox','Andrea Leadsom'];
+		var eliminateds = ['stephen crabb'];
 		var data = table.sheets.Sheet1;
 		var l = data.length;
 		var day = false;
@@ -42,6 +45,8 @@ window.init = function init(el, config) {
 		var scaleVotes = d3.scale.linear()
 			.domain([0,300])
 			.range([0,100])
+
+		var currentClass = 'active';
 
 
 		for (var i = l-1; i >= 0; i--)
@@ -77,17 +82,19 @@ window.init = function init(el, config) {
 				{
 					
 						var name = array[k-1].candidate.split("_").join(" ");
+						if(eliminateds.indexOf(name) != -1 )currentClass = 'inactive';
+
 						var position = (width * array[k-1].percentage) / 100;
 						var pMargin = (position * margin) / width;
 
-						d3.selectAll('#day' + String(i +1))
+						d3.select('#day' + String(i +1))
 						.append('div')
 						.attr('class', 'person')
 						.attr('id', 'person' + k)
 						.append('div')
 						.attr('class', 'person-bundle')
 						.append('div')
-						.attr('class' , 'person-img active')
+						.attr('class' , 'person-img ' + currentClass)
 						.append('img')
 						.attr('src', config.assetPath + "/assets/imgs/" + array[k-1].candidate + ".jpg")
 
@@ -103,12 +110,9 @@ window.init = function init(el, config) {
 				{
 					var last = d3.select('#person' + array.length + ' .person-bundle .person-img')
 					.attr('class', 'person-img inactive')
-
-					var last2 = d3.select('#person' + String(array.length-1) + ' .person-bundle .person-img')
-					.attr('class', 'person-img inactive')
 				}
-				
-				//makePositions()
+
+			
 			}
 			else if(data[i]['day status'] == 'active' && day)
 			{
@@ -141,6 +145,8 @@ window.init = function init(el, config) {
 				{
 					
 						var name = pastarray[k-1].candidate.split("_").join(" ");
+						if(eliminateds.indexOf(name) != -1 )currentClass = 'inactive';
+
 						var position = (width * pastarray[k-1].percentage) / 100;
 						var pMargin = (position * margin) / width;
 
@@ -151,7 +157,7 @@ window.init = function init(el, config) {
 						.append('div')
 						.attr('class', 'person-bundle')
 						.append('div')
-						.attr('class' , 'person-img active')
+						.attr('class' , 'person-img ' + currentClass)
 						.append('img')
 						.attr('src', config.assetPath + "/assets/imgs/" + pastarray[k-1].candidate + ".jpg")
 
@@ -167,6 +173,8 @@ window.init = function init(el, config) {
 					var last = d3.select('#person-past' + pastarray.length + ' .person-bundle .person-img')
 					.attr('class', 'person-img inactive');
 				}
+
+				
 				
 				
 			}
