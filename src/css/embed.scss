@@ -62,10 +62,10 @@ body {
     font-size: 14px;
     display: inline-block;
     vertical-align: top; }
-      @media (min-width: 400px) {
+      @media (min-width: 380px) {
         .person {padding: 5px; padding-left:0px;} 
       }
-      @media (max-width: 399px) {
+      @media (max-width: 379px) {
         .person {margin-right: 10px;}
 
       }
@@ -130,7 +130,7 @@ body {
     display: block;
     border-radius: 200px;
   }
-  @media (max-width: 399px) {
+  @media (max-width: 379px) {
     .person-img img {width: 52px;}
     .person-img.active::before,
     .person-img.inactive::before {
@@ -139,7 +139,7 @@ body {
       //height: 52px;
     }
   }
-  @media (min-width: 400px) {
+  @media (min-width: 380px) {
     .person-img {height: 52px;}
     .person-img img {height: 100%; float: right;}
     .person-img.active::before,
@@ -160,7 +160,7 @@ body {
   color: #767676; 
   width: 100%;
   }
-  @media (min-width: 400px) {
+  @media (min-width: 380px) {
     .person-name {
       font-size: 14px;
   } }
@@ -183,9 +183,9 @@ body {
     width: calc(100% - 120px);
     position: relative;
   }
-  //@media (min-width: 400px) {
+  //@media (min-width: 380px) {
   //.person-bundle{width:100%}
-  //}@media (min-width: 399px) {
+  //}@media (min-width: 379px) {
   //	.person-bundle{width:105px}
   //}
 

@@ -106,8 +106,6 @@ window.init = function init(el, config) {
 
 					var last2 = d3.select('#person' + String(array.length-1) + ' .person-bundle .person-img')
 					.attr('class', 'person-img inactive')
-
-					console.log('hasgdljc', d3.select('#person' + array.length-1))
 				}
 				
 				//makePositions()
@@ -192,7 +190,7 @@ window.init = function init(el, config) {
 		{
 			var width = window.innerWidth;
 
-			if(window.innerWidth >= 400)
+			if(window.innerWidth >= 380)
 			{
 
 
