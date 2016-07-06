@@ -15,7 +15,7 @@ window.init = function init(el, config) {
 
 		//http://www.mirror.co.uk/news/uk-news/next-conservative-leader-elected-how-8327597
 
-		d3.json('http://interactive.guim.co.uk/docsdata-test/1HV0KtuxIFqQkHdxOb8Nh6AnB-24-6stJXZ65q-9X-Ls.json', function(error,data){createApp(error,data)})
+		d3.json('https://interactive.guim.co.uk/docsdata-test/1HV0KtuxIFqQkHdxOb8Nh6AnB-24-6stJXZ65q-9X-Ls.json', function(error,data){createApp(error,data)})
 
 
     /*reqwest({
@@ -28,7 +28,6 @@ window.init = function init(el, config) {
 
     function createApp(error, table)
 	{
-		console.log(table)
 		var candidates = ['Theresa May','Michael Gove','Stephen Crabb','Liam Fox','Andrea Leadsom'];
 		var data = table.sheets.Sheet1;
 		var l = data.length;
@@ -40,7 +39,9 @@ window.init = function init(el, config) {
 		var w = d3.select(window).on('resize', resize);
 		var width = window.innerWidth;
 		var margin = 90;
-		
+		var scaleVotes = d3.scale.linear()
+			.domain([0,300])
+			.range([0,100])
 
 
 		for (var i = l-1; i >= 0; i--)
@@ -62,7 +63,7 @@ window.init = function init(el, config) {
 					{
 						var name = currentData['candidate' + j].toLowerCase().split(' ').join('_');
 
-						array.push({candidate:name, percentage: parseFloat(currentData['candidate' + j + ' percentage'])});
+						array.push({candidate:name, votes: parseFloat(currentData['candidate' + j + ' votes']), percentage: scaleVotes(parseFloat(currentData['candidate' + j + ' votes']))});
 						
 					} 
 				}
@@ -94,7 +95,7 @@ window.init = function init(el, config) {
 						//.style("margin-left", position - pMargin + 'px')
 						.append('div')
 						.attr('class', 'person-name')
-						.html(toTitleCase(name) + '<br><span class="percentage">' + array[k-1].percentage + '%</span>')
+						.html(toTitleCase(name) + '<br><span class="percentage">' + array[k-1].votes + '</span>')
 				}
 
 
@@ -102,6 +103,11 @@ window.init = function init(el, config) {
 				{
 					var last = d3.select('#person' + array.length + ' .person-bundle .person-img')
 					.attr('class', 'person-img inactive')
+
+					var last2 = d3.select('#person' + String(array.length-1) + ' .person-bundle .person-img')
+					.attr('class', 'person-img inactive')
+
+					console.log('hasgdljc', d3.select('#person' + array.length-1))
 				}
 				
 				//makePositions()
@@ -123,7 +129,7 @@ window.init = function init(el, config) {
 					{
 						var name = data[i]['candidate' + j].toLowerCase().split(' ').join('_');
 
-						pastarray.push({candidate:name, percentage: parseFloat(data[i]['candidate' + j + ' percentage'])});
+						pastarray.push({candidate:name, votes: parseFloat(currentData['candidate' + j + ' votes']), percentage: scaleVotes(parseFloat(data[i]['candidate' + j + ' votes']))});
 						
 					} 
 				}
